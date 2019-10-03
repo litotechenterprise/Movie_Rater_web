@@ -13,6 +13,11 @@ class App extends Component {
   movieClicked = movie => {
     this.setState({selectedMovie: movie})
   }
+
+  movieClicked = movie => {
+    this.setState({selectedMovie: movie})
+  }
+
   componentDidMount(){
     // fetch Data
     fetch('http://127.0.0.1:8000/api/movies/', {
@@ -26,13 +31,14 @@ class App extends Component {
   }
 
 
+
   render(){
       return (
         <div className="App">
               <h1>Movie Rater</h1>
               <div className="layout">
                 <MovieList movies={this.state.movies} movieClicked={this.movieClicked} />
-                <MovieDetails movie={this.state.selectedMovie}/>
+                <MovieDetails movie={this.state.selectedMovie} updateMovie={this.movieClicked}/>
               </div>
         </div>
       );

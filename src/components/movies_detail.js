@@ -3,9 +3,44 @@ var FontAwesome = require('react-fontawesome');
 
 
 class MovieDetails extends Component {
+    
+    state = {
+        highlighted: -1
+    }
+
+    highlightRate = high => evt => {
+        this.setState({highlighted: high});
+    }
+
+    rateClick = stars => evt => {
+          // send Data 
+          // below is a back-tick not a single quote
+        fetch(`http://127.0.0.1:8000/api/movies/${this.props.movie.id}/rate_movie/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization' : 'Token fb0501ed838183ca5a33cc7947d980e3359d1747'
+            },
+            body: JSON.stringify({stars: stars + 1})
+            }).then( resp => resp.json())
+            .then( res => this.getDetails())
+            .catch( err => console.log(err))
+    }
+
+    // refreshing the data
+    getDetails = () => {
+        fetch(`http://127.0.0.1:8000/api/movies/${this.props.movie.id}/`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization' : 'Token fb0501ed838183ca5a33cc7947d980e3359d1747'
+            }
+            }).then( resp => resp.json())
+            .then( res => this.props.updateMovie(res))
+            .catch( err => console.log(err))
+    }
 
     render(){
-
         const mov = this.props.movie;
 
         return (
@@ -20,6 +55,16 @@ class MovieDetails extends Component {
                     <FontAwesome name='star' className={mov.avg_ratings > 4 ? 'orange': ''}/>
                     ({mov.no_of_ratings})
                     <p>{mov.description}</p>
+
+                    <div className="rate-container">
+                            <h2>Rate it!!</h2>
+                            { [...Array(5)].map((e,i) => {
+                                return <FontAwesome key={i}name='star' className={this.state.highlighted > i - 1 ? 'purple': ''}
+                                    onMouseEnter={this.highlightRate(i)} onMouseLeave={this.highlightRate(-1)}
+                                    onClick={this.rateClick(i)}/>;
+                            })}
+                    </div>
+
                 </div>
             ) : null }
             </React.Fragment>
