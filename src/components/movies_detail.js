@@ -15,7 +15,7 @@ class MovieDetails extends Component {
     rateClick = stars => evt => {
           // send Data 
           // below is a back-tick not a single quote
-        fetch(`http://127.0.0.1:8000/api/movies/${this.props.movie.id}/rate_movie/`, {
+        fetch(`${process.env.REACT_APP_API_URL}/api/movies/${this.props.movie.id}/rate_movie/`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -29,7 +29,7 @@ class MovieDetails extends Component {
 
     // refreshing the data
     getDetails = () => {
-        fetch(`http://127.0.0.1:8000/api/movies/${this.props.movie.id}/`, {
+        fetch(`${process.env.REACT_APP_API_URL}/api/movies/${this.props.movie.id}/`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

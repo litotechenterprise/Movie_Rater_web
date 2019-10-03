@@ -12,6 +12,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   text-align: left;
+  grid-gap: 20px;
 }
 
 .orange {
@@ -27,6 +28,16 @@
 }
 
 .rate-container span.fa {
-  font-size: 2em;
+  font-size: 1.5em;
   cursor: pointer;
+}
+
+.movie_item {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+}
+
+.movie_item span {
+  font-size: 1.2em;
+  margin: 16px 5px;
 }
